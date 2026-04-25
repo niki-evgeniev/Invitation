@@ -29,7 +29,7 @@ A full-stack web application for creating and sharing personalized baptism invit
 
 * Spring Boot
 * REST API
-* Maven
+* Gradle
 
 ### Database
 
