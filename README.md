@@ -87,7 +87,7 @@ npm start
 
 ## 👤 Author
 
-* Toncho (add your full name if you want)
+* Nikolay Ivanov
 
 ---
 
