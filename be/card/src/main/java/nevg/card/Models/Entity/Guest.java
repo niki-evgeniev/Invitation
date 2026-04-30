@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "guest")
@@ -24,12 +26,16 @@ public class Guest {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "message")
+    @Column(name = "message", columnDefinition = "TEXT")
     private String message;
 
     @Column(name = "add_date", columnDefinition = "DATETIME(0)")
     @CreationTimestamp
     private LocalDate addDate;
+
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Followers> followers = new ArrayList<>();
 
     public Guest() {
     }
@@ -80,5 +86,13 @@ public class Guest {
 
     public void setAddDate(LocalDate addDate) {
         this.addDate = addDate;
+    }
+
+    public List<Followers> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<Followers> followers) {
+        this.followers = followers;
     }
 }

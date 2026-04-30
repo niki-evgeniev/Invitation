@@ -22,7 +22,8 @@ public class Followers {
     @CreationTimestamp
     private LocalDate addDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "guest_id")
     private Guest guest;
 
     public Followers() {

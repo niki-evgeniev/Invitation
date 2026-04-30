@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Гости и придружители</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            padding: 30px;
+        }
+
+        .guest-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .guest-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .guest-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .guest-email {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .message {
+            background: #f8f9fa;
+            padding: 12px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            color: #555;
+        }
+
+        .followers-title {
+            font-weight: bold;
+            margin-top: 15px;
+            color: #34495e;
+        }
+
+        .followers-list {
+            margin-top: 10px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .followers-list li {
+            background: #eef3f7;
+            margin-bottom: 8px;
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+
+        .no-followers {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Гости и техните придружители</h1>
+
+<div th:if="${#lists.isEmpty(guests)}">
+    <p>Все още няма записани гости.</p>
+</div>
+
+<div class="guest-card" th:each="guest : ${guests}">
+
+    <div class="guest-header">
+        <div>
+            <div class="guest-name"
+                 th:text="${guest.name + ' ' + guest.lastName}">
+                Иван Иванов
+            </div>
+
+            <div class="guest-email"
+                 th:text="${guest.email}">
+                email@example.com
+            </div>
+        </div>
+
+        <div th:text="${#temporals.format(guest.addDate, 'dd.MM.yyyy')}">
+            01.01.2026
+        </div>
+    </div>
+
+    <div class="message"
+         th:if="${guest.message != null and !#strings.isEmpty(guest.message)}"
+         th:text="${guest.message}">
+        Съобщение от госта
+    </div>
+
+    <div class="followers-title">
+        Придружители:
+    </div>
+
+    <ul class="followers-list"
+        th:if="${guest.followers != null and !#lists.isEmpty(guest.followers)}">
+
+        <li th:each="follower : ${guest.followers}"
+            th:text="${follower.name + ' ' + follower.lastName}">
+            Петър Петров
+        </li>
+
+    </ul>
+
+    <div class="no-followers"
+         th:if="${guest.followers == null or #lists.isEmpty(guest.followers)}">
+        Няма добавени придружители.
+    </div>
+
+</div>
+
+</body>
+</html>
