@@ -66,46 +66,6 @@ public class MailSendServiceImpl implements MailSendService {
         }
     }
 
-//    private HttpEntity<Object> mapMailjetCardEmail(MailSendDTO mailSendDTO, HttpHeaders headers) {
-//        String textContent = (mailSendDTO.getTextContent() != null && !mailSendDTO.getTextContent().isBlank())
-//                ? mailSendDTO.getTextContent()
-//                : "Благодарим ти " + mailSendDTO.getToName() + " че приехте нашата покана!" +
-//                "Очакваме ви на 31.05.2026г.";
-//
-//        String htmlContent = (mailSendDTO.getHtmlContent() != null && !mailSendDTO.getHtmlContent().isBlank())
-//                ? mailSendDTO.getHtmlContent()
-//                : "<p><strong>Благодарим ти " + mailSendDTO.getToName() + " че приехте нашата покана!</strong></p>" +
-//                "<p>Ако имате някакви въпроси позвънете на 0896450701 или 0899524251</p>" +
-//                "<p>Очакваме ви на 31.05.2026г.</p>";
-//
-//        Map<String, Object> body = Map.of(
-//                "Messages", List.of(
-//                        Map.of(
-//                                "From", Map.of(
-//                                        "Email", fromEmail,
-//                                        "Name", fromName
-//                                ),
-//                                "To", List.of(
-//                                        Map.of(
-//                                                "Email", mailSendDTO.getToEmail(),
-//                                                "Name", mailSendDTO.getToName()
-//                                        )
-//                                ),
-//                                "ReplyTo", Map.of(
-//                                        "Email", fromEmail,
-//                                        "Name", fromName
-//                                ),
-//                                "Subject", mailSendDTO.getSubject(),
-//                                "TextPart", textContent,
-//                                "HTMLPart", "<div style='font-family:Arial,sans-serif;font-size:16px;line-height:1.6;color:#333;'>" + htmlContent + "</div>",
-//                                "TrackOpens", "disabled",   // ← добави това
-//                                "TrackClicks", "disabled"   // ← и това
-//                        )
-//                )
-//        );
-//
-//        return new HttpEntity<>(body, headers);
-//    }
 private HttpEntity<Object> mapMailjetCardEmail(MailSendDTO mailSendDTO, HttpHeaders headers) {
 
     String htmlContent = (mailSendDTO.getHtmlContent() != null && !mailSendDTO.getHtmlContent().isBlank())
@@ -123,11 +83,25 @@ private HttpEntity<Object> mapMailjetCardEmail(MailSendDTO mailSendDTO, HttpHead
             .replaceAll("\\s+", " ")
             .trim();
 
+//    Map<String, Object> body = Map.of(
+//            "Messages", List.of(
+//                    Map.of(
+//                            "From", Map.of("Email", fromEmail, "Name", fromName),
+//                            "Sender", Map.of("Email", fromEmail, "Name", fromName),
+//                            "To", List.of(Map.of("Email", mailSendDTO.getToEmail(), "Name", mailSendDTO.getToName())),
+//                            "ReplyTo", Map.of("Email", fromEmail, "Name", fromName),
+//                            "Subject", mailSendDTO.getSubject(),
+//                            "TextPart", plainText,
+//                            "HTMLPart", wrapHtml(htmlContent),
+//                            "TrackOpens", "disabled",
+//                            "TrackClicks", "disabled"
+//                    )
+//            )
+//    );
     Map<String, Object> body = Map.of(
             "Messages", List.of(
                     Map.of(
                             "From", Map.of("Email", fromEmail, "Name", fromName),
-                            "Sender", Map.of("Email", fromEmail, "Name", fromName),
                             "To", List.of(Map.of("Email", mailSendDTO.getToEmail(), "Name", mailSendDTO.getToName())),
                             "ReplyTo", Map.of("Email", fromEmail, "Name", fromName),
                             "Subject", mailSendDTO.getSubject(),
@@ -149,8 +123,7 @@ private HttpEntity<Object> mapMailjetCardEmail(MailSendDTO mailSendDTO, HttpHead
             <p>%s</p>
             <hr style='border:none; border-top:1px solid #eee; margin:20px 0;'/>
             <p style='font-size:12px; color:#999;'>
-                Това съобщение е изпратено от Николай<br/>
-                При въпроси: 0896450701 или 0899524251
+                При въпроси: Христина - 0896450701, Николай - 0899524251
             </p>
         </div>
     """.formatted(safeContent);

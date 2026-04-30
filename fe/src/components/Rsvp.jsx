@@ -39,8 +39,8 @@ export default function RSVP(
         console.log("RSVP DATA:", data);
         let serverText = '';
         try {
-            const response = await fetch("http://localhost:8585/addGuest", {
-            // const response = await fetch("/api/addGuest", {
+            // const response = await fetch("http://localhost:8585/addGuest", {
+            const response = await fetch("/api/addGuest", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -53,7 +53,6 @@ export default function RSVP(
             if (!response.ok) {
                 throw new Error("Server error");
             }
-
 
             console.log("Server response:", result);
 
@@ -120,6 +119,7 @@ export default function RSVP(
                     name="message"
                     placeholder="Съобщение (по желание)"
                     rows="4"
+                    maxLength={5000}
                 />
 
                 <button type="submit">Потвърди</button>

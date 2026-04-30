@@ -31,11 +31,11 @@ spring:
     user:
       name: admin
       password: "{bcrypt}$2a$12$Wbw4laM3ijH8SsumBhWwuePIRHIpzE0AX1ufkwHpnviStkV2fIHCu"
-  thymeleaf: # Thymeleaf
-    cache: false
-    mode: HTML
-    encoding: UTF-8
-    prefix: file:src/main/resources/templates/
+#  thymeleaf: # Thymeleaf
+#    cache: false
+#    mode: HTML
+#    encoding: UTF-8
+#    prefix: file:src/main/resources/templates/
   web:
     resources:
       static-locations: file:src/main/resources/static/
