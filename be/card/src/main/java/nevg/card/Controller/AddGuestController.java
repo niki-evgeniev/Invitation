@@ -29,7 +29,6 @@ public class AddGuestController {
         if (message.equals("error") || message.equals("Email exist")) {
             System.out.println("Error : " + message);
             return ResponseEntity.status(500).body("Error : " + message);
-
         }
         String sendMail = mailSendService.sendEmailInvate(guestDTO);
 
